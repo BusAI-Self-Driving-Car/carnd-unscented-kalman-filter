@@ -7,20 +7,23 @@ add_definitions(-std=c++11)
 set(CXX_FLAGS "-Wall")
 set(CMAKE_CXX_FLAGS, "${CXX_FLAGS}")
 
-set(sources src/ukf.cpp src/main.cpp src/tools.cpp)
-
+file(GLOB SOURCES "src/*.cpp")
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin") 
 
+include_directories(include)
+
 include_directories(/usr/local/include)
 include_directories(/usr/local/opt/openssl/include)
+
 link_directories(/usr/local/lib)
 link_directories(/usr/local/opt/openssl/lib)
 link_directories(/usr/local/Cellar/libuv/1*/lib)
 
 endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin") 
 
+add_library(ukf ${SOURCES})
+target_include_directories(ukf PUBLIC include)
 
-add_executable(UnscentedKF ${sources})
-
-target_link_libraries(UnscentedKF z ssl uv uWS)
+add_executable(UnscentedKF tests/main.cpp)
+target_link_libraries(UnscentedKF ukf z ssl uv uWS)
