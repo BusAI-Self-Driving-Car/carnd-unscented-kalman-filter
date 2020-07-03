@@ -1,6 +1,6 @@
 #include <iostream>
-#include "Eigen/Dense"
-#include "ukf/ukf.h"
+#include <Eigen/Dense>
+#include "ukf.h"
 
 using namespace std;
 using Eigen::MatrixXd;
@@ -46,7 +46,7 @@ UKF::UKF() {
   std_radrd_ = 0.3;
 
   // Parameters above this line are scaffolding, do not modify
-  
+
   /**
   TODO:
 
@@ -100,7 +100,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
   // skip predict/update if sensor type is ignored
   if ((meas_package.sensor_type_ == MeasurementPackage::RADAR && use_radar_) ||
       (meas_package.sensor_type_ == MeasurementPackage::LASER && use_laser_)) {
-    
+
     /*****************************************************************************
     *  Initialization
     ****************************************************************************/
